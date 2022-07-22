@@ -7,7 +7,7 @@ declare -A list=(
     [glacier-camera]='string(//context[name="QObject"]/message[source="Camera"]/translation)'
     [glacier-contacts]='string(//context[name="QObject"]/message[source="Contacts"]/translation)'
     [glacier-dialer]='string(//context[name="QObject"]/message[source="Dialer"]/translation)'
-    [glacier-filemuncher]='string(//context[name="QObject"]/message[source="Files browser"]/translation)'
+    [glacier-filemuncher]='string(//context[name="QObject"]/message[source="Files"]/translation)'
     [glacier-gallery]='string(//context[name="QObject"]/message[source="Gallery"]/translation)'
     [glacier-music]='string(//context[name="QObject"]/message[source="Music"]/translation)'
     [glacier-packagemanager]='string(//context[name="QObject"]/message[source="Packages"]/translation)'
@@ -23,13 +23,13 @@ cd ..
 for repo in ${!list[@]}; do
     query="${list[$repo]}"
 
-if /bin/false; then
+if /bin/true; then
     cd ./$repo
-        git fetch --all --tags
+        git fetch --all --tags --prune
         git merge upstream/master
 #        git reset upstream/master
         ts=$(find . -name "$repo.ts")
-        lupdate . -recursive -ts "$ts"
+        lupdate . -noobsolete -recursive -ts "$ts"
     cd ..
 fi
 
