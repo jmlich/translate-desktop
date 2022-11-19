@@ -29,7 +29,11 @@ if /bin/true; then
         git merge upstream/master
 #        git reset upstream/master
         ts=$(find . -name "$repo.ts")
-        lupdate . -noobsolete -recursive -ts "$ts"
+        if [ "$repo" = "glacier-settings" ]; then
+            lupdate -recursive ./src/lib/ ./src/main.cpp ./src/qml/ -no-recursive ./src/plugins/  -ts ./translations/*ts -no-obsolete
+        else
+            lupdate . -noobsolete -recursive -ts "$ts"
+        fi
     cd ..
 fi
 
